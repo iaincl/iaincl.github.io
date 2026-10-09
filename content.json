@@ -1,0 +1,295 @@
+{
+  "site": {
+    "name": "Iain",
+    "tagline": "(welcome to my thought cafe!)",
+    "hours": "Open daily, 24/7",
+    "email": "you@example.com",
+    "madeIn": "SEATTLE",
+    "footer": "is there anything better than the smell of fresh coffee?"
+  },
+  "intro": {
+    "kicker": "(nice to meet you)",
+    "greeting": "hi, I'm Iain",
+    "facts": [
+      {
+        "label": "(from)",
+        "value": "Taipei, Taiwan"
+      },
+      {
+        "label": "(graduated from)",
+        "value": "UPenn"
+      },
+      {
+        "label": "(works in)",
+        "value": "big tech"
+      },
+      {
+        "label": "(currently located in)",
+        "value": "Seattle ☂"
+      }
+    ],
+    "pill": "☕ loves coffee!"
+  },
+  "projects": [
+    {
+      "name": "Kafei",
+      "full": "Kafei: Coffee Diary",
+      "kind": "iOS app",
+      "year": "2026",
+      "date": "Jun 2026 – now",
+      "badge": "on the App Store",
+      "desc": "A coffee diary for iPhone. Log every cup, keep a map of your cafés, and let a quick “which is the better cup?” game rank them for you.",
+      "shots": [
+        "img/kafei/01-diary.jpg",
+        "img/kafei/02-document.jpg",
+        "img/kafei/03-track.jpg",
+        "img/kafei/04-rank.jpg",
+        "img/kafei/05-sort.jpg",
+        "img/kafei/06-share.jpg"
+      ],
+      "stats": [
+        {
+          "number": "50K+",
+          "label": "organic Instagram views"
+        },
+        {
+          "number": "50+",
+          "label": "early-access users"
+        },
+        {
+          "number": "solo",
+          "label": "founder, designer & builder"
+        }
+      ],
+      "points": [
+        "Snap a drink and on-device AI (Apple Vision) cuts out the background, so logging takes a photo instead of a form and inference costs stay low as it scales.",
+        "Head-to-head ranking: answer “which is the better cup?” and a custom algorithm sorts every café you've been to.",
+        "Map-based café discovery, monthly stats (cups, spend, caffeine) and a shareable report card.",
+        "Owned it end to end: user research, roadmap, specs, and the full UX and visual system in Figma."
+      ],
+      "tags": [
+        "React Native",
+        "Expo",
+        "Supabase",
+        "Apple Vision",
+        "Figma"
+      ],
+      "links": [
+        {
+          "label": "get it on the App Store →",
+          "url": "https://apps.apple.com/us/app/kafei-coffee-diary/id6798890718"
+        }
+      ]
+    },
+    {
+      "name": "Twittergram",
+      "full": "",
+      "kind": "web app",
+      "year": "2025",
+      "date": "Jan – Aug 2025",
+      "badge": "a Instagram/X integrated AI project",
+      "desc": "A social network that crosses Instagram with X: real-time tweets stream straight into an Instagram-style feed, with friends, posts and comments built around them.",
+      "shots": [],
+      "stats": [],
+      "points": [
+        "Live posts from X streamed into the feed with Apache Kafka.",
+        "GPT-based pipelines that generate, rank and personalize content using social ranking signals.",
+        "Selfie → movie star: vector search in ChromaDB plus a face API matches your profile photo (stored on S3) to the IMDb actors you look most like.",
+        "Ranking algorithms on Apache Spark surface the posts and people most relevant to you."
+      ],
+      "tags": [
+        "GPT",
+        "ChromaDB",
+        "Face API",
+        "AWS S3",
+        "Apache Kafka",
+        "Apache Spark"
+      ],
+      "links": [
+        {
+          "label": "view the code on GitHub →",
+          "url": "https://github.com/upenn-nets-2120/project-stream-team"
+        }
+      ]
+    },
+    {
+      "name": "1n.progress",
+      "full": "",
+      "kind": "personal vlog · Instagram & Threads",
+      "year": "2026",
+      "date": "ongoing",
+      "badge": "personal branding!",
+      "desc": "Documenting life. Weekly recaps and lifestyle content for a Taiwanese audience, and now growing into a vlog channel.",
+      "shots": [
+        "img/vlog/01-move-to-seattle.jpg",
+        "img/vlog/02-saturday-in-seattle.jpg"
+      ],
+      "stats": [
+        {
+          "number": "100K",
+          "label": "recent views"
+        },
+        {
+          "number": "weekly",
+          "label": "life recaps"
+        },
+        {
+          "number": "TW",
+          "label": "made for a Taiwan audience"
+        }
+      ],
+      "points": [
+        "Weekly recaps of what I did, ate, drank and learned.",
+        "Lifestyle content made for an audience back home in Taiwan.",
+        "a vlog channel brewing"
+      ],
+      "tags": [
+        "Instagram",
+        "Threads",
+        "Weekly recaps",
+        "Lifestyle",
+        "Vlog (soon)"
+      ],
+      "links": [
+        {
+          "label": "follow on Instagram →",
+          "url": "https://www.instagram.com/1n.progress/"
+        },
+        {
+          "label": "follow on Threads →",
+          "url": "https://www.threads.com/@1n.progress"
+        }
+      ]
+    },
+    {
+      "name": "Gabee",
+      "full": "Gabee: Personal Coffee Diary",
+      "kind": "web app",
+      "year": "",
+      "date": "",
+      "badge": "for home baristas",
+      "desc": "A home-barista log for making coffee and collecting beans. Dial in every espresso shot, keep track of the beans you brew, and watch your daily caffeine without overdoing it.",
+      "shots": [
+        "img/gabee/01-hero.jpg",
+        "img/gabee/02-features.jpg",
+        "img/gabee/03-log.jpg"
+      ],
+      "stats": [
+        {
+          "number": "1:2",
+          "label": "golden-ratio checker"
+        },
+        {
+          "number": "400mg",
+          "label": "daily caffeine limit tracked"
+        },
+        {
+          "number": "12+",
+          "label": "drink types supported"
+        }
+      ],
+      "points": [
+        "Espresso dial-in: log dose, yield, grind and brew time and get instant feedback on whether a shot is on target, under or over extracted.",
+        "A running log of the beans you brew, from Ethiopia Yirgacheffe to Colombia Huila, with star ratings to remember your best shots.",
+        "Café drinks count too: caffeine is estimated automatically, and an animated iced cup fills up toward your 400mg daily limit, with alerts as you get close.",
+        "Full history grouped by day, behind secure sign-in with hashed passwords and JWT tokens."
+      ],
+      "tags": [
+        "Web app",
+        "Espresso dial-in",
+        "Caffeine tracking",
+        "JWT auth",
+        "Vercel"
+      ],
+      "links": [
+        {
+          "label": "try Gabee →",
+          "url": "https://gabee-client.vercel.app/"
+        }
+      ]
+    }
+  ],
+  "about": {
+    "title": "the long version.",
+    "paragraphs": [
+      "I grew up in Taipei, Taiwan, studied at the University of Pennsylvania, and now work in big tech in Seattle.",
+      "Coffee is my constant. Outside of work, I like running, filming, and building."
+    ],
+    "facts": [
+      {
+        "label": "THE USUAL",
+        "value": "oat flat white"
+      },
+      {
+        "label": "FROM",
+        "value": "Taipei, Taiwan"
+      },
+      {
+        "label": "ALMA MATER",
+        "value": "UPenn"
+      },
+      {
+        "label": "BASED IN",
+        "value": "Seattle, WA ☂"
+      }
+    ]
+  },
+  "interests": [
+    {
+      "name": "coffee",
+      "pastry": "croissant",
+      "text": "Hunting down the best little cafés and pour-overs."
+    },
+    {
+      "name": "games",
+      "pastry": "donut",
+      "text": "Playing them, and occasionally making them."
+    },
+    {
+      "name": "reading",
+      "pastry": "cake",
+      "text": "Currently reading: a book you love."
+    },
+    {
+      "name": "music",
+      "pastry": "roll",
+      "text": "Lo-fi, jazz, whatever's on repeat this week."
+    },
+    {
+      "name": "photography",
+      "pastry": "muffin",
+      "text": "Film, phone, golden hour."
+    },
+    {
+      "name": "something",
+      "pastry": "cookie",
+      "text": "Swap these for your real interests."
+    }
+  ],
+  "contact": {
+    "title": "come say hi.",
+    "text": "Got an idea, a project, or a good café recommendation? My door's always open.",
+    "links": [
+      {
+        "label": "EMAIL",
+        "handle": "you@example.com",
+        "url": "mailto:you@example.com"
+      },
+      {
+        "label": "GITHUB",
+        "handle": "@iaincl",
+        "url": "https://github.com/iaincl"
+      },
+      {
+        "label": "LINKEDIN",
+        "handle": "/in/you",
+        "url": "#"
+      },
+      {
+        "label": "INSTAGRAM",
+        "handle": "@1n.progress",
+        "url": "https://www.instagram.com/1n.progress/"
+      }
+    ]
+  }
+}

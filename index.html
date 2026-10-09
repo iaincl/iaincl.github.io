@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Iain. — a café-shaped portfolio</title>
+  <meta name="description" content="Projects, interests and a little about me. Come on in." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #ffffff;
+      --ink: #111111;
+      --ink-soft: #5d6372;
+      --hi: #2347d1;
+      --blue: #1f3b9e;
+      --sky: #dce7ff;
+      --sky-ink: #b8caff;
+      --mono: "DM Mono", ui-monospace, monospace;
+      --display: "Bagel Fat One", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--paper); color: var(--ink); font-family: var(--mono); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+    a { color: inherit; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    svg.line { fill: var(--paper); stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; overflow: visible; }
+    svg.line .fill { fill: var(--ink); }
+    svg.line .nofill { fill: none; }
+    ::selection { background: var(--hi); color: #fff; }
+
+    /* ---------- splash ---------- */
+    #splash {
+      position: fixed; inset: 0; z-index: 200; background: var(--blue); color: #fff;
+      display: grid; place-items: center; justify-items: center; align-content: center; gap: 18px; font-size: 18px; letter-spacing: .02em;
+      transition: opacity .8s ease, visibility .8s;
+    }
+    #splash span { opacity: 0; animation: fadeIn .8s .2s ease forwards; }
+    #splash img { width: 110px; opacity: 0; animation: fadeIn .6s ease forwards, waddle .5s ease-in-out infinite alternate; }
+    @keyframes waddle { from { transform: rotate(-6deg) translateY(0); } to { transform: rotate(6deg) translateY(-6px); } }
+    #splash.gone { opacity: 0; visibility: hidden; }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* ---------- top bar ---------- */
+    .top {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 60; height: 76px; padding: 0 28px;
+      display: flex; align-items: center; justify-content: space-between; pointer-events: none;
+    }
+    .top > * { pointer-events: auto; }
+    .mark b, .hero h1 b { color: var(--hi); font-weight: 400; }
+    .mark { font-family: var(--display); font-size: 34px; line-height: 1; text-decoration: none; letter-spacing: -.01em; opacity: 0; transform: translateY(-10px); transition: .5s ease; }
+    body.scrolled .mark { opacity: 1; transform: none; }
+    .open { font-size: 13px; display: flex; align-items: center; gap: 8px; }
+    .open i { width: 8px; height: 8px; border-radius: 50%; background: var(--hi); animation: blink 2.4s infinite; }
+    @keyframes blink { 50% { opacity: .25; } }
+
+    /* ---------- intro ---------- */
+    .hero { min-height: 100vh; display: grid; place-items: center; text-align: center; padding: 0 16px; position: relative; }
+    .hero h1 { font-family: var(--display); font-weight: 400; font-size: clamp(88px, 19vw, 210px); line-height: .9; letter-spacing: -.02em; }
+    .hero p { margin-top: 18px; font-size: clamp(15px, 2vw, 19px); }
+.hero .hours { margin-top: 10px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); display: inline-flex; align-items: center; gap: 8px; }
+    .hero .hours i { width: 8px; height: 8px; border-radius: 50%; background: var(--hi); animation: blink 2.4s infinite; }
+    .hint { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); font-size: 13px; color: var(--ink-soft); animation: bob 2s ease-in-out infinite; }
+    @keyframes bob { 50% { transform: translate(-50%, 6px); } }
+
+    .lines { min-height: 100vh; display: grid; place-items: center; text-align: center; position: relative; overflow: hidden; padding: 90px 16px; }
+    .cloud { position: absolute; width: 150px; top: 24px; left: -180px; animation: drift 38s linear infinite; }
+    .lines > div { position: relative; z-index: 1; }
+    .cloud { z-index: 0; opacity: .9; }
+    .kicker { font-size: 14px; color: var(--ink-soft); }
+    .lines h2 { font-family: var(--display); font-weight: 400; font-size: clamp(48px, 8vw, 84px); line-height: 1; margin: 6px 0 36px; }
+    .lines h2 b { color: var(--hi); font-weight: 400; }
+    .meet { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 28px; max-width: 900px; margin: 0 auto; }
+    .figure { position: relative; padding-top: 122px; }
+    .guy { height: 340px; display: block; margin: 0 auto; position: relative; z-index: 1; }
+    .umbrella { position: absolute; top: 0; left: 50%; width: 170px; transform: translateX(-50%); z-index: 2; animation: sway 4s ease-in-out infinite; transform-origin: 50% 90%; }
+    @keyframes sway { 0%, 100% { transform: translateX(-50%) rotate(-4deg); } 50% { transform: translateX(-50%) rotate(4deg); } }
+    .drop { position: absolute; width: 2px; height: 14px; border-radius: 2px; background: var(--hi); opacity: 0; animation: fall 1.6s linear infinite; }
+    @keyframes fall { 0% { transform: translateY(-30px); opacity: 0; } 15% { opacity: .8; } 100% { transform: translateY(120px); opacity: 0; } }
+    .notes { list-style: none; display: grid; gap: 34px; }
+    .notes.left { text-align: right; }
+    .notes.right { text-align: left; }
+    .notes li { font-size: 18px; line-height: 1.4; position: relative; }
+    .notes small { display: block; font-size: 12px; color: var(--ink-soft); letter-spacing: .04em; margin-bottom: 2px; }
+    .notes li::after { content: ""; position: absolute; top: 50%; width: 22px; border-top: 2px dashed var(--ink); }
+    .notes.left li::after { right: -34px; }
+    .notes.right li::after { left: -34px; }
+    .pill { display: inline-block; margin-top: 18px; background: var(--hi); color: #fff; border-radius: 99px; padding: 6px 18px; font-size: 15px; }
+    .lines .fade { opacity: 0; transform: translateY(14px); transition: opacity .8s ease, transform .8s ease; transition-delay: calc(var(--d, 0) * .15s); }
+    .lines.in .fade { opacity: 1; transform: none; }
+    .cloud.two { width: 100px; top: auto; bottom: 24px; animation-duration: 52s; animation-delay: -20s; }
+    @keyframes drift { to { left: 105%; } }
+
+    /* ---------- the café stage ---------- */
+    #cafe { min-height: 100vh; padding: 110px 20px 150px; display: flex; flex-direction: column; align-items: center; }
+    .label { font-size: 13px; color: var(--ink-soft); text-align: center; margin-bottom: 8px; }
+    .scene-title { font-family: var(--display); font-weight: 400; font-size: clamp(34px, 5vw, 52px); line-height: 1.1; text-align: center; margin-bottom: 44px; }
+    .scenes { width: 100%; max-width: 760px; display: grid; }
+    .scene { grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateX(var(--from, 40px)); transition: opacity .5s ease, transform .6s cubic-bezier(.2,.7,.2,1), visibility .5s; }
+    .scene.active { opacity: 1; visibility: visible; transform: none; }
+
+    /* shelf / projects */
+    .shelf { max-width: 540px; margin: 0 auto 78px; }
+    .cups { display: grid; grid-template-columns: 1fr 1fr; align-items: end; }
+    .cup { position: relative; display: grid; justify-items: center; padding-top: 40px; }
+    .cup svg { width: 164px; transition: transform .45s cubic-bezier(.3,1.6,.5,1); }
+    .cup:hover svg, .cup:focus-visible svg { transform: translateY(-8px) rotate(-4deg); }
+    .cup:focus-visible { outline: none; }
+    .cup:focus-visible .name { background: var(--hi); color: #fff; }
+    .cup .steam { position: absolute; top: 0; width: 46px; opacity: 0; transition: opacity .3s; }
+    .cup:hover .steam, .cup:focus-visible .steam { opacity: 1; }
+    .steam path { animation: rise 1.8s ease-in-out infinite; }
+    .steam path:nth-child(2) { animation-delay: .6s; }
+    @keyframes rise { 0% { transform: translateY(6px); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateY(-10px); opacity: 0; } }
+    .cup .name { position: absolute; top: calc(100% + 22px); font-size: 13px; white-space: nowrap; padding: 0 6px; transition: .2s; }
+    .cup:hover .name { background: var(--hi); color: #fff; }
+    .plank { height: 12px; border: 3px solid var(--ink); border-radius: 3px; margin-top: -2px; position: relative; }
+    .plank::before, .plank::after { content: ""; position: absolute; top: 9px; width: 3px; height: 16px; background: var(--ink); }
+    .plank::before { left: 4%; } .plank::after { right: 4%; }
+    .brewing { text-align: center; margin-top: 18px; font-size: 14px; }
+    .brewing .pot { display: inline-block; color: var(--hi); animation: simmer 2s ease-in-out infinite; }
+    @keyframes simmer { 50% { transform: translateY(-3px); } }
+    .tip { text-align: center; font-size: 13px; color: var(--ink-soft); margin-top: -18px; }
+
+    /* about */
+    .about { display: grid; grid-template-columns: 240px 1fr; gap: 56px; align-items: center; }
+    .arch { aspect-ratio: 3/4; border: 3px solid var(--ink); border-radius: 999px 999px 6px 6px; overflow: hidden; padding: 10px; }
+    .arch > div { width: 100%; height: 100%; border-radius: 999px 999px 2px 2px; background: var(--sky); display: grid; place-items: end center; overflow: hidden; }
+    .arch img { width: 118%; max-width: none; height: auto; transform: translateY(4%); }
+    .arch svg { width: 70%; }
+    .about h3 { font-family: var(--display); font-weight: 400; font-size: 34px; line-height: 1.1; margin-bottom: 14px; }
+    .about p { margin-bottom: 14px; }
+    .order { border-top: 2px dashed var(--ink); margin-top: 22px; padding-top: 14px; font-size: 14px; }
+    .order div { display: flex; justify-content: space-between; gap: 12px; }
+
+    /* pastry case / interests */
+    .case { background: linear-gradient(180deg, var(--sky) 0, transparent 70%); max-width: 600px; margin: 0 auto; border: 3px solid var(--ink); border-radius: 22px 22px 6px 6px; position: relative; padding: 18px 18px 0; }
+    .case::before { content: ""; position: absolute; top: 18px; right: 34px; width: 60px; height: 3px; background: var(--ink); transform: rotate(-35deg); box-shadow: 18px 8px 0 var(--ink); opacity: .35; }
+    .tray { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 3px solid var(--ink); padding: 20px 0 10px; }
+    .pastry { display: grid; justify-items: center; gap: 4px; padding: 6px; }
+    .pastry svg { width: 96px; height: 70px; transition: transform .4s cubic-bezier(.3,1.6,.5,1); }
+    .pastry:hover svg, .pastry.on svg { transform: translateY(-6px) scale(1.06); }
+    .pastry .tag { font-size: 12px; border: 2px solid var(--ink); border-radius: 4px; padding: 0 8px; position: relative; }
+    .pastry .tag::before { content: ""; display: inline-block; width: 5px; height: 5px; border: 1.5px solid var(--ink); border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+    .pastry.on .tag { background: var(--hi); border-color: var(--hi); color: #fff; }
+    .pastry.on .tag::before { border-color: #fff; }
+    .case-base { height: 46px; border-top: 0; display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 12px; color: var(--ink-soft); }
+    .note { max-width: 600px; margin: 22px auto 0; min-height: 56px; text-align: center; }
+    .note b { font-weight: 500; }
+
+    /* tip jar / contact */
+    .contact { display: grid; grid-template-columns: 200px 1fr; gap: 56px; align-items: center; max-width: 640px; margin: 0 auto; }
+    .contact .bear { width: 100%; border-radius: 50%; background: var(--sky); aspect-ratio: 1; object-fit: cover; mix-blend-mode: multiply; }
+    .jar-coin { animation: drop 3.5s ease-in infinite; }
+    @keyframes drop { 0%, 55% { transform: translateY(-70px); opacity: 0; } 60% { opacity: 1; } 80%, 100% { transform: translateY(0); opacity: 1; } }
+    .contact h3 { font-family: var(--display); font-weight: 400; font-size: 34px; line-height: 1.1; margin-bottom: 10px; }
+    .links { margin-top: 18px; border-top: 2px dashed var(--ink); }
+    .links a { display: flex; gap: 10px; align-items: baseline; text-decoration: none; padding: 10px 0; border-bottom: 2px dashed var(--ink); transition: padding .25s; }
+    .links a span:nth-child(2) { flex: 1; border-bottom: 2px dotted var(--ink-soft); transform: translateY(-5px); opacity: .5; }
+    .links a:hover { padding-left: 8px; color: var(--hi); }
+
+    /* ---------- control bar ---------- */
+    .controls {
+      position: fixed; left: 50%; bottom: 22px; z-index: 70; display: flex; gap: 4px; padding: 6px;
+      background: var(--ink); border-radius: 10px; transform: translate(-50%, 160%); transition: transform .5s cubic-bezier(.2,.8,.2,1);
+      box-shadow: 0 14px 30px -12px rgba(17,17,17,.5);
+    }
+    body.at-cafe .controls { transform: translate(-50%, 0); }
+    .controls button { width: 54px; height: 46px; display: grid; place-items: center; border-radius: 6px; color: #fff; transition: background .2s; }
+    .controls button:hover, .controls button:focus-visible { background: var(--hi); outline: none; }
+    .controls svg { width: 26px; stroke: currentColor; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .dots { display: flex; gap: 6px; align-items: center; padding: 0 10px; }
+    .dots i { width: 6px; height: 6px; border-radius: 50%; background: #fff; opacity: .3; transition: .3s; }
+    .dots i.on { opacity: 1; width: 16px; border-radius: 3px; }
+
+    /* ---------- overlays (receipts) ---------- */
+    .overlay { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 16px; background: rgba(255,255,255,.9); opacity: 0; visibility: hidden; transition: .35s; }
+    .overlay.open { opacity: 1; visibility: visible; }
+    .receipt {
+      width: 100%; max-width: 420px; background: var(--blue); color: #fff; border-radius: 6px; padding: 30px 26px 26px; font-size: 15px;
+      transform: translateY(40px); transition: transform .5s cubic-bezier(.2,.8,.2,1);
+      max-height: calc(100vh - 32px); overflow-y: auto;
+    }
+    .overlay.open .receipt { transform: none; }
+    .receipt.light { background: var(--paper); color: var(--ink); border: 3px solid var(--ink); }
+    .receipt .c { text-align: center; }
+    .receipt .hl { color: var(--sky-ink); text-decoration: none; }
+    .receipt.light .hl { color: var(--hi); }
+    .receipt .rule { border: 0; border-top: 1.5px dashed currentColor; margin: 14px 0; opacity: .8; }
+    .receipt .rule.dbl { border-top: 4px double currentColor; }
+    .receipt .row { display: flex; justify-content: space-between; gap: 12px; }
+    .receipt ul { list-style: none; }
+    .receipt li button, .receipt li a { width: 100%; text-align: left; padding: 10px 0; display: block; text-decoration: none; text-transform: uppercase; letter-spacing: .02em; }
+    .receipt li button:hover, .receipt li a:hover { color: var(--sky-ink); }
+    .receipt li + li { border-top: 1.5px dashed rgba(255,255,255,.5); }
+    .receipt.light li + li { border-top-color: rgba(17,17,17,.4); }
+    .bars { height: 38px; width: 72%; margin: 18px auto 14px; background: repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 4px, currentColor 4px 5px, transparent 5px 8px, currentColor 8px 11px, transparent 11px 12px); }
+    .x { display: block; margin: 14px auto 0; font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
+    .ticket h4 { font-family: var(--display); font-weight: 400; font-size: 34px; line-height: 1.05; margin: 6px 0 10px; }
+    .ticket .btn { display: block; text-align: center; background: var(--hi); color: #fff; text-decoration: none; padding: 12px; border-radius: 6px; margin-top: 18px; }
+    .ticket .btn:hover { background: var(--ink); }
+    .ticket.wide { max-width: 760px; }
+    .ticket .btn.alt { background: none; color: var(--ink); border: 2px solid var(--ink); margin-top: 10px; }
+    .ticket .btn.alt:hover { background: var(--ink); color: #fff; }
+    .ticket .kind { font-size: 13px; color: var(--ink-soft); margin: -4px 0 10px; }
+    .shots { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 18px -26px 0; padding: 4px 26px 10px; scrollbar-width: thin; }
+    .shots img { height: 380px; width: auto; flex: none; border-radius: 14px; border: 2px solid var(--ink); scroll-snap-align: start; background: var(--sky); }
+    .shots img:first-child { margin-left: auto; } .shots img:last-child { margin-right: auto; }
+    .shots { align-items: center; }
+    .shots img.land { height: auto; width: min(86%, 560px); }
+    .swipe { font-size: 12px; color: var(--ink-soft); text-align: center; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+    .stats div { border: 2px solid var(--ink); border-radius: 8px; padding: 10px 12px; }
+    .stats b { display: block; font-family: var(--display); font-weight: 400; font-size: 30px; line-height: 1.1; color: var(--hi); }
+    .stats span { font-size: 12px; line-height: 1.35; display: block; }
+    .points { list-style: none; font-size: 14.5px; line-height: 1.55; }
+    .points li { padding-left: 18px; position: relative; margin-bottom: 8px; }
+    .points li::before { content: "*"; position: absolute; left: 0; color: var(--hi); }
+    .cup .name em { display: block; text-align: center; font-style: normal; font-size: 11px; color: var(--hi); }
+    @media (max-width: 720px) { .shots img { height: 320px; } .stats b { font-size: 24px; } }
+
+    footer { text-align: center; font-size: 12px; color: var(--ink-soft); padding: 0 16px 110px; }
+    footer img { display: block; width: 92px; margin: 0 auto 6px; transition: transform .4s cubic-bezier(.3,1.6,.5,1); }
+    footer img:hover { transform: translateY(-6px) rotate(-6deg); }
+
+    @media (max-width: 720px) {
+      .meet { grid-template-columns: 1fr 1fr; gap: 26px 18px; }
+      .figure { grid-column: 1 / -1; order: -1; }
+      .guy { height: 260px; }
+      .notes, .notes.left, .notes.right { text-align: center; gap: 22px; }
+      .notes li::after { display: none; }
+      .top { padding: 0 16px; height: 64px; }
+      .mark { font-size: 28px; }
+      #cafe { padding: 90px 16px 130px; }
+      .about, .contact { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+      .arch { width: 200px; margin: 0 auto; }
+      .contact .bear { width: 180px; margin: 0 auto; display: block; }
+      .links { text-align: left; }
+      .cup svg { width: 120px; }
+      .tray { grid-template-columns: repeat(2, 1fr); }
+      .pastry svg { width: 84px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+      .lines .fade { opacity: 1; transform: none; }
+      .drop { display: none; }
+    }
+    /* ---------- edit panel ---------- */
+    .editbtn { font-size: 13px; border: 2px solid var(--ink); border-radius: 99px; padding: 1px 12px; background: #fff; margin-left: 14px; }
+    .editbtn:hover { background: var(--hi); border-color: var(--hi); color: #fff; }
+    .top-right { display: flex; align-items: center; }
+    .editor {
+      position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100%); z-index: 150; background: #fff;
+      border-left: 3px solid var(--ink); display: flex; flex-direction: column;
+      transform: translateX(105%); transition: transform .45s cubic-bezier(.2,.8,.2,1); box-shadow: -20px 0 40px -30px rgba(17,17,17,.5);
+    }
+    body.editing .editor { transform: none; }
+    .ed-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px; border-bottom: 2px dashed var(--ink); }
+    .ed-head h3 { font-family: var(--display); font-weight: 400; font-size: 24px; line-height: 1; }
+    .ed-head p { font-size: 11px; color: var(--ink-soft); line-height: 1.4; margin-top: 4px; }
+    .ed-actions { display: flex; gap: 6px; flex: none; }
+    .ed-actions button { font-size: 13px; padding: 6px 14px; border-radius: 99px; border: 2px solid var(--ink); }
+    .ed-actions .save { background: var(--hi); border-color: var(--hi); color: #fff; }
+    .ed-actions .save:disabled { opacity: .45; cursor: default; }
+    .ed-body { flex: 1; overflow-y: auto; padding: 4px 16px 60px; font-size: 14px; }
+    .ed-sec { border-bottom: 2px dashed var(--ink); padding: 10px 0; }
+    .ed-sec > summary { cursor: pointer; font-family: var(--display); font-size: 20px; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+    .ed-sec > summary::after { content: "+"; font-family: var(--mono); font-size: 18px; }
+    .ed-sec[open] > summary::after { content: "–"; }
+    .ed-field { display: block; margin: 10px 0; }
+    .ed-field > small, .ed-group > small { display: block; font-size: 11px; color: var(--ink-soft); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 3px; }
+    .ed-body input, .ed-body textarea, .ed-body select {
+      width: 100%; font: inherit; font-size: 14px; color: var(--ink); background: #fff;
+      border: 2px solid var(--ink); border-radius: 6px; padding: 6px 8px; line-height: 1.5;
+    }
+    .ed-body textarea { resize: vertical; min-height: 66px; }
+    .ed-body input:focus, .ed-body textarea:focus, .ed-body select:focus { outline: none; border-color: var(--hi); box-shadow: 0 0 0 3px var(--sky); }
+    .ed-group { margin: 12px 0; }
+    .ed-item { border: 2px solid var(--ink); border-radius: 8px; padding: 6px 10px 2px; margin: 8px 0; }
+    .ed-item > details > summary { cursor: pointer; font-weight: 500; padding: 2px 0; list-style: none; display: flex; justify-content: space-between; gap: 8px; }
+    .ed-row { display: flex; gap: 6px; align-items: flex-start; margin: 6px 0; }
+    .ed-row > :first-child { flex: 1; }
+    .ed-tools { display: flex; gap: 2px; flex: none; }
+    .ed-tools button { width: 26px; height: 26px; border-radius: 5px; font-size: 13px; color: var(--ink-soft); }
+    .ed-tools button:hover { background: var(--sky); color: var(--ink); }
+    .ed-add { width: 100%; font-size: 13px; border: 2px dashed var(--ink-soft); border-radius: 6px; padding: 5px; margin: 4px 0 6px; color: var(--ink-soft); }
+    .ed-add:hover { border-color: var(--hi); color: var(--hi); }
+    .toast { position: fixed; left: 50%; top: 18px; z-index: 210; transform: translate(-50%, -150%); background: var(--ink); color: #fff; font-size: 13px; padding: 8px 16px; border-radius: 99px; opacity: 0; visibility: hidden; transition: transform .4s cubic-bezier(.2,.8,.2,1), opacity .3s, visibility .3s; }
+    .toast.show { transform: translate(-50%, 0); opacity: 1; visibility: visible; }
+    .toast.err { background: #c0392b; }
+  </style>
+</head>
+<body>
+
+  <div id="splash" aria-hidden="true"><img src="img/cup-walk.png" alt="" /><span>(come on in)</span></div>
+
+  <header class="top">
+    <a href="#" class="mark" aria-label="Back to top" data-name></a>
+    <div class="top-right">
+      <div class="open"><i></i><span id="clock">open</span></div>
+      <button class="editbtn" id="editBtn" hidden>✎ edit</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <h1 data-name></h1>
+        <p id="tagline"></p>
+        <p class="hours" id="hours"><i></i><span></span></p>
+      </div>
+      <div class="hint">scroll ↓</div>
+    </section>
+
+    <section class="lines" id="lines">
+      <svg class="line cloud" viewBox="0 0 170 50" aria-hidden="true"><path d="M5 46 c0 -12 14 -16 22 -10 c2 -18 30 -26 40 -8 c8 -14 30 -12 32 6 c10 -8 28 -4 30 12 c10 -4 24 -2 34 0 z"/></svg>
+      <svg class="line cloud two" viewBox="0 0 170 50" aria-hidden="true"><path d="M5 46 c0 -12 14 -16 22 -10 c2 -18 30 -26 40 -8 c8 -14 30 -12 32 6 c10 -8 28 -4 30 12 c10 -4 24 -2 34 0 z"/></svg>
+      <div>
+        <p class="kicker fade" id="kicker"></p>
+        <h2 class="fade" style="--d:1" id="greeting"></h2>
+        <div class="meet">
+          <ul class="notes left" id="factsL"></ul>
+          <div class="figure fade" style="--d:2" id="figure">
+            <svg class="umbrella" viewBox="0 0 160 120" aria-hidden="true">
+              <path d="M80 60 V104 c0 9 -13 9 -13 0" fill="none" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+              <path d="M10 60 C10 18 150 18 150 60 C138 52 126 52 115 60 C104 52 92 52 80 60 C68 52 56 52 45 60 C34 52 22 52 10 60Z" fill="#2347d1" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+              <path d="M45 60 C48 36 62 24 80 22 M115 60 C112 36 98 24 80 22" fill="none" stroke="#111" stroke-width="3"/>
+              <path d="M80 22 v-10" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+            <img class="guy" src="img/walker.png" alt="Illustration of Iain holding a book" />
+          </div>
+          <ul class="notes right" id="factsR"></ul>
+        </div>
+        <span class="pill fade" style="--d:7" id="pill"></span>
+      </div>
+    </section>
+
+    <section id="cafe" aria-live="polite">
+      <div class="label" id="sceneLabel">(seasonal projects)</div>
+      <h2 class="scene-title" id="sceneTitle">the shelf</h2>
+
+      <div class="scenes">
+        <!-- 01 · projects -->
+        <div class="scene active" data-title="the shelf" data-sub="seasonal projects">
+          <div id="shelves"></div>
+          <p class="tip">(tap a cup to see what's inside)</p>
+          <p class="brewing"><span class="pot" aria-hidden="true">♨</span> new cups and ideas are always brewing</p>
+        </div>
+
+        <!-- 02 · about -->
+        <div class="scene" data-title="the barista" data-sub="about me">
+          <div class="about">
+            <div class="arch"><div>
+              <img src="img/sipping.png" alt="Illustration of someone sipping coffee" />
+            </div></div>
+            <div>
+              <h3 id="aboutTitle"></h3>
+              <div id="aboutParas"></div>
+              <div class="order" id="aboutFacts"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 · interests -->
+        <div class="scene" data-title="the pastry case" data-sub="things I love">
+          <div class="case">
+            <div class="tray" id="tray"></div>
+            <div class="case-base">✦ freshly baked daily ✦</div>
+          </div>
+          <p class="note" id="note">(pick a pastry)</p>
+        </div>
+
+        <!-- 04 · contact -->
+        <div class="scene" data-title="the counter" data-sub="say hi">
+          <div class="contact">
+            <img class="bear" src="img/bear.jpg" alt="A bear in a cap holding an iced coffee" />
+            <div>
+              <h3 id="contactTitle"></h3>
+              <p id="contactText"></p>
+              <div class="links" id="contactLinks"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><img src="img/bean.png" alt="" /><span id="footerText"></span></footer>
+
+  <nav class="controls" aria-label="Café navigation">
+    <button id="menuBtn" aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></svg></button>
+    <button id="prevBtn" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="dots" id="dots"></div>
+    <button id="nextBtn" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+  </nav>
+
+  <!-- menu receipt -->
+  <div class="overlay" id="menu" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="receipt">
+      <div class="c"><span id="menuName"></span><br/><a class="hl" id="menuEmail"></a></div>
+      <hr class="rule" />
+      <div class="row"><span>Table: 1</span><span>Dine in</span></div>
+      <hr class="rule dbl" />
+      <ul id="menuList"></ul>
+      <hr class="rule" />
+      <div class="bars"></div>
+      <div class="c" id="menuFoot"></div>
+      <button class="x" data-close>close</button>
+    </div>
+  </div>
+
+  <!-- project ticket -->
+  <div class="overlay" id="ticket" role="dialog" aria-modal="true" aria-label="Project">
+    <div class="receipt light ticket" id="ticketBody"></div>
+  </div>
+
+  <!-- edit panel (only shown when running locally with serve.py) -->
+  <aside class="editor" id="editor" aria-label="Edit content">
+    <div class="ed-head">
+      <div><h3>edit the café</h3><p>Changes preview live.<br/>Save writes them to content.json.</p></div>
+      <div class="ed-actions"><button id="edCancel">close</button><button class="save" id="edSave" disabled>save</button></div>
+    </div>
+    <div class="ed-body" id="edBody"></div>
+  </aside>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* All text lives in content.json. Run `python3 serve.py` and press ✎ edit to change it. */
+    let C;
+
+    const CUPS = [
+      // round bowl cup with flower
+      `<rect x="26" y="34" width="80" height="9" rx="4.5"/><path d="M30 43 h72 c0 32 -14 50 -36 50 s-36 -18 -36 -50z"/><path class="nofill" d="M102 52 c16 0 16 24 -2 24"/><circle cx="22" cy="58" r="7"/><circle cx="14" cy="50" r="7"/><circle cx="14" cy="66" r="7"/><circle cx="18" cy="58" r="3" class="fill"/>`,
+      // espresso cup on saucer, filled
+      `<path d="M30 42 h74 v22 c0 18 -16 28 -37 28 s-37 -10 -37 -28z"/><path class="fill" d="M30 60 q9.25 -11 18.5 0 q9.25 -11 18.5 0 q9.25 -11 18.5 0 q9.25 -11 18.5 0 v4 c0 18 -16 28 -37 28 s-37 -10 -37 -28z"/><path class="nofill" d="M104 50 h8 a10 10 0 0 1 0 20 h-9"/><rect x="40" y="92" width="54" height="6" rx="3"/>`,
+      // glass mug with zigzag
+      `<rect x="40" y="26" width="58" height="66" rx="5"/><rect x="36" y="22" width="66" height="9" rx="4"/><path class="nofill" d="M46 48 l6 18 l6 -18 l6 18 l6 -18 l6 18 l6 -18 l6 18 l6 -18"/><path class="nofill" d="M46 86 v6 M52 86 v6 M58 86 v6 M64 86 v6 M70 86 v6 M76 86 v6 M82 86 v6 M88 86 v6"/><path class="nofill" d="M40 40 h-10 a6 6 0 0 0 -6 6 v22 a6 6 0 0 0 6 6 h10"/>`,
+      // arched glass
+      `<path d="M32 38 h76 l-10 54 h-56z"/><rect x="29" y="33" width="82" height="8" rx="4"/><path class="nofill" d="M48 86 v-20 a6 6 0 0 1 12 0 v20 M64 86 v-20 a6 6 0 0 1 12 0 v20 M80 86 v-20 a6 6 0 0 1 12 0 v20"/><rect x="44" y="88" width="52" height="7" rx="2" class="fill"/><path class="nofill" d="M106 48 h6 a10 10 0 0 1 0 20 h-8"/>`,
+      // takeaway cup
+      `<path d="M42 30 h56 l-7 64 h-42z"/><rect x="36" y="22" width="68" height="10" rx="4"/><path d="M40 22 l4 -8 h52 l4 8"/><rect x="45" y="50" width="50" height="22" class="fill"/>`,
+      // tall latte glass
+      `<path d="M44 14 h52 l-4 80 h-44z"/><path class="fill" d="M46.2 54 h47.6 l-1.8 40 h-44z"/><path class="nofill" d="M45.5 40 c8 -4 14 4 24 0 s16 -4 25 0"/><path class="nofill" d="M84 4 l-6 40"/>`,
+    ];
+    const PASTRIES = {
+      croissant: `<path d="M10 62 C14 40 34 22 60 22 C86 22 106 40 110 62 C102 56 94 54 88 58 C82 46 72 42 60 42 C48 42 38 46 32 58 C26 54 18 56 10 62z"/><path class="nofill" d="M32 58 C30 44 36 30 44 25 M88 58 C90 44 84 30 76 25 M60 22 V42"/>`,
+      donut: `<ellipse cx="60" cy="46" rx="40" ry="20"/><path class="fill" d="M24 40 c4 -14 68 -14 72 0 c-6 6 -10 2 -16 8 c-6 -4 -12 4 -20 0 c-8 4 -14 -4 -20 0 c-6 -6 -10 -2 -16 -8z"/><ellipse cx="60" cy="40" rx="11" ry="5"/><path class="nofill" d="M60 46 v0" />`,
+      cake: `<path d="M16 66 H104 V36 L16 50 Z"/><path class="nofill" d="M16 58 L104 50"/><path class="fill" d="M16 50 L104 36 V42 L16 55Z"/><circle cx="92" cy="28" r="7"/><path class="nofill" d="M92 21 c2 -6 6 -8 10 -8"/>`,
+      roll: `<ellipse cx="60" cy="46" rx="38" ry="20"/><path class="nofill" d="M60 44 c6 0 6 5 0 5 c-12 0 -12 -12 0 -12 c18 0 18 20 0 20 c-24 0 -24 -28 0 -28 c26 0 30 22 18 28"/>`,
+      muffin: `<path d="M36 72 L42 46 H78 L84 72Z"/><path class="nofill" d="M50 50 v20 M60 50 v20 M70 50 v20"/><path d="M34 47 C30 18 90 18 86 47Z"/><circle class="fill" cx="52" cy="34" r="2.5" stroke="none"/><circle class="fill" cx="66" cy="28" r="2.5" stroke="none"/><circle class="fill" cx="72" cy="38" r="2.5" stroke="none"/>`,
+      cookie: `<circle cx="60" cy="44" r="28"/><g class="fill" stroke="none"><circle cx="50" cy="34" r="4"/><circle cx="68" cy="38" r="3.5"/><circle cx="56" cy="54" r="4"/><circle cx="72" cy="56" r="3"/><circle cx="44" cy="48" r="3"/></g>`,
+    };
+    const STEAM = `<svg class="line steam" viewBox="0 0 46 36" aria-hidden="true"><path class="nofill" d="M14 32 q-6 -8 0 -16 q6 -8 0 -16"/><path class="nofill" d="M32 32 q-6 -8 0 -16 q6 -8 0 -16"/></svg>`;
+
+    const $ = (id) => document.getElementById(id);
+    const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const has = (a) => Array.isArray(a) && a.length > 0;
+    const ext = (url) => /^mailto:|^#/.test(url) ? '' : ' target="_blank" rel="noopener"';
+
+    // ---- render everything from C
+    function render() {
+      const S = C.site;
+      document.title = `${S.name}. — a café-shaped portfolio`;
+      document.querySelectorAll('[data-name]').forEach((el) => el.innerHTML = `${esc(S.name)}<b>.</b>`);
+      $('tagline').textContent = S.tagline;
+      $('hours').querySelector('span').textContent = S.hours || '';
+      $('hours').hidden = !S.hours;
+
+      const I = C.intro, half = Math.ceil(I.facts.length / 2);
+      const fact = (f, i) => `<li class="fade" style="--d:${3 + i}"><small>${esc(f.label)}</small>${esc(f.value)}</li>`;
+      $('kicker').textContent = I.kicker;
+      $('greeting').innerHTML = `${esc(I.greeting)}<b>.</b>`;
+      $('factsL').innerHTML = I.facts.slice(0, half).map(fact).join('');
+      $('factsR').innerHTML = I.facts.slice(half).map((f, i) => fact(f, i + half)).join('');
+      $('pill').textContent = I.pill;
+      $('pill').hidden = !I.pill;
+
+      // shelves: two cups per plank
+      let html = '';
+      C.projects.forEach((p, i) => {
+        if (i % 2 === 0) html += '<div class="shelf"><div class="cups">';
+        html += `
+          <button class="cup" data-i="${i}" aria-label="Open project: ${esc(p.name)}">
+            ${STEAM}
+            <svg class="line" viewBox="0 0 140 100" aria-hidden="true">${CUPS[i % CUPS.length]}</svg>
+            <span class="name">${esc(p.name)}${p.badge ? `<em>${esc(p.badge)}</em>` : ''}</span>
+          </button>`;
+        if (i % 2 === 1 || i === C.projects.length - 1) html += '</div><div class="plank"></div></div>';
+      });
+      $('shelves').innerHTML = html;
+
+      const A = C.about;
+      $('aboutTitle').textContent = A.title;
+      $('aboutParas').innerHTML = A.paragraphs.map((t) => `<p>${esc(t)}</p>`).join('');
+      $('aboutFacts').innerHTML = A.facts.map((f) => `<div><span>${esc(f.label)}</span><span>${esc(f.value)}</span></div>`).join('');
+
+      $('tray').innerHTML = C.interests.map((it, i) => `
+        <button class="pastry" data-i="${i}">
+          <svg class="line" viewBox="0 0 120 80" aria-hidden="true">${PASTRIES[it.pastry] || PASTRIES.cookie}</svg>
+          <span class="tag">${esc(it.name)}</span>
+        </button>`).join('');
+      $('note').textContent = '(pick a pastry)';
+
+      const K = C.contact;
+      $('contactTitle').textContent = K.title;
+      $('contactText').textContent = K.text;
+      $('contactLinks').innerHTML = K.links.map((l) =>
+        `<a href="${esc(l.url)}"${ext(l.url)}><span>${esc(l.label)}</span><span></span><span>${esc(l.handle)}</span></a>`).join('');
+
+      $('menuName').textContent = S.name;
+      $('menuEmail').textContent = S.email;
+      $('menuEmail').href = `mailto:${S.email}`;
+      $('menuFoot').innerHTML = `MADE IN ${esc(S.madeIn)}<br/>${esc(S.name)}. 2026<br/><br/>THANK YOU :)`;
+      $('footerText').textContent = `${S.footer} · © 2026 ${S.name}`;
+    }
+
+    // ---- pastry case
+    $('tray').addEventListener('click', (e) => {
+      const b = e.target.closest('.pastry'); if (!b) return;
+      $('tray').querySelectorAll('.pastry').forEach((p) => p.classList.toggle('on', p === b));
+      const it = C.interests[b.dataset.i];
+      $('note').innerHTML = `<b>${esc(it.name)}</b><br/>${esc(it.text)}`;
+    });
+
+    // ---- overlays
+    const openOverlay = (el) => { el.classList.add('open'); el.querySelector('button, a')?.focus({ preventScroll: true }); };
+    const closeAll = () => document.querySelectorAll('.overlay.open').forEach((o) => o.classList.remove('open'));
+    document.querySelectorAll('.overlay').forEach((o) => o.addEventListener('click', (e) => {
+      if (e.target === o || e.target.closest('[data-close]')) closeAll();
+    }));
+
+    const ticket = $('ticket'), ticketBody = $('ticketBody');
+    $('shelves').addEventListener('click', (e) => {
+      const c = e.target.closest('.cup'); if (!c) return;
+      const p = C.projects[c.dataset.i], no = String(+c.dataset.i + 1).padStart(3, '0');
+      const when = [p.kind, p.date || p.year].filter(Boolean).join(' · ');
+      ticketBody.innerHTML = `
+        <div class="row"><span>ORDER #${no}</span><span>${esc(p.year)}</span></div>
+        <hr class="rule dbl" />
+        <h4>${esc(p.full || p.name)}</h4>
+        ${p.kind ? `<div class="kind">(${esc(when)})</div>` : ''}
+        <p>${esc(p.desc)}</p>
+        ${has(p.shots) ? `<div class="shots">${p.shots.map((src, k) => `<img src="${esc(src)}" alt="${esc(p.name)} screenshot ${k + 1}" />`).join('')}</div><div class="swipe" hidden>← scroll for more →</div>` : ''}
+        ${has(p.stats) ? `<div class="stats">${p.stats.map((s) => `<div><b>${esc(s.number)}</b><span>${esc(s.label)}</span></div>`).join('')}</div>` : ''}
+        ${has(p.points) ? `<hr class="rule" /><ul class="points">${p.points.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
+        ${has(p.tags) ? `<hr class="rule" />${p.tags.map((t) => `<div class="row"><span>1× ${esc(t)}</span><span>✓</span></div>`).join('')}` : ''}
+        <hr class="rule" />
+        <div class="row"><b>TOTAL</b><b>made with love</b></div>
+        ${(p.links || []).map((l, k) => `<a class="btn${k ? ' alt' : ''}" href="${esc(l.url)}"${ext(l.url)}>${esc(l.label)}</a>`).join('')}
+        <button class="x" data-close>back to the shelf</button>`;
+      ticketBody.classList.toggle('wide', has(p.shots));
+      // only show the scroll hint when the screenshots overflow
+      const shots = ticketBody.querySelector('.shots');
+      if (shots) {
+        const fit = () => { ticketBody.querySelector('.swipe').hidden = shots.scrollWidth <= shots.clientWidth + 4; };
+        shots.querySelectorAll('img').forEach((im) => {
+          const onload = () => { im.classList.toggle('land', im.naturalWidth > im.naturalHeight); fit(); };
+          im.complete ? onload() : im.addEventListener('load', onload);
+        });
+        requestAnimationFrame(fit);
+      }
+      ticketBody.scrollTop = 0;
+      openOverlay(ticket);
+    });
+
+    // ---- scenes
+    const scenes = [...document.querySelectorAll('.scene')];
+    const label = $('sceneLabel'), title = $('sceneTitle'), dots = $('dots');
+    dots.innerHTML = scenes.map(() => '<i></i>').join('');
+    let cur = 0;
+    function go(n) {
+      const next = (n + scenes.length) % scenes.length;
+      const dir = n > cur ? 1 : -1;
+      scenes.forEach((s, i) => {
+        s.style.setProperty('--from', i === next ? `${40 * dir}px` : `${-40 * dir}px`);
+        s.classList.toggle('active', i === next);
+        s.toggleAttribute('inert', i !== next);
+      });
+      cur = next;
+      const s = scenes[cur];
+      label.textContent = `(${s.dataset.sub})`;
+      title.textContent = s.dataset.title;
+      [...dots.children].forEach((d, i) => d.classList.toggle('on', i === cur));
+    }
+    go(0);
+    const cafe = $('cafe');
+    const toCafe = () => cafe.scrollIntoView({ behavior: 'smooth' });
+    $('prevBtn').onclick = () => go(cur - 1);
+    $('nextBtn').onclick = () => go(cur + 1);
+
+    // menu receipt lists the scenes
+    const menu = $('menu');
+    $('menuList').innerHTML = scenes.map((s, i) => `<li><button data-go="${i}">* ${s.dataset.sub}</button></li>`).join('');
+    menu.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-go]'); if (!b) return;
+      closeAll(); go(+b.dataset.go); toCafe();
+    });
+    $('menuBtn').onclick = () => openOverlay(menu);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') return closeAll();
+      if (e.target.closest('.editor')) return;
+      if (document.querySelector('.overlay.open') || !document.body.classList.contains('at-cafe')) return;
+      if (e.key === 'ArrowRight') go(cur + 1);
+      if (e.key === 'ArrowLeft') go(cur - 1);
+    });
+
+    // ---- scroll states
+    new IntersectionObserver(([e]) => document.body.classList.toggle('at-cafe', e.isIntersecting), { threshold: 0.35 }).observe(cafe);
+    new IntersectionObserver(([e]) => { if (e.isIntersecting) e.target.classList.add('in'); }, { threshold: 0.2 }).observe($('lines'));
+    const onScroll = () => document.body.classList.toggle('scrolled', scrollY > innerHeight * 0.6);
+    addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+    // ---- drizzle around the umbrella
+    const fig = $('figure');
+    for (let i = 0; i < 12; i++) {
+      const d = document.createElement('i');
+      d.className = 'drop';
+      const side = i % 2 ? 1 : -1;
+      d.style.left = `calc(50% + ${side * (95 + Math.random() * 70)}px)`;
+      d.style.top = `${Math.random() * 60}px`;
+      d.style.animationDelay = `${Math.random() * 1.6}s`;
+      fig.appendChild(d);
+    }
+
+    // ---- open sign clock
+    const clock = $('clock');
+    const tick = () => clock.textContent = 'open · ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }).toLowerCase();
+    tick(); setInterval(tick, 30000);
+
+    // ---- splash
+    const splash = $('splash');
+    const hide = () => splash.classList.add('gone');
+    splash.addEventListener('click', hide);
+    setTimeout(hide, matchMedia('(prefers-reduced-motion: reduce)').matches ? 200 : 1700);
+
+    /* ============================================================
+       edit panel: builds a form from content.json, previews live,
+       and saves through serve.py (POST /api/save)
+       ============================================================ */
+    const LABELS = {
+      site: 'site basics', intro: 'intro (nice to meet you)', projects: 'projects (the shelf)', about: 'about (the barista)',
+      interests: 'interests (pastry case)', contact: 'contact (the counter)',
+      madeIn: 'city on the menu receipt', hours: 'opening hours (under tagline)', footer: 'footer line', greeting: 'greeting (blue dot added)', pill: 'blue badge',
+      full: 'full title (optional)', kind: 'type', badge: 'blue tag under the cup', desc: 'description',
+      shots: 'screenshots (image paths)', stats: 'stat boxes', points: 'bullet points', tags: 'tech / tags',
+      links: 'buttons / links', paragraphs: 'paragraphs', facts: 'facts', pastry: 'pastry drawing', handle: 'shown as',
+    };
+    const lab = (k) => LABELS[k] ?? k;
+    const isLong = (path, v) => ['desc', 'text', 'footer'].includes(String(path).split('.').pop()) || /paragraphs|points/.test(path) || String(v).length > 60;
+    const blank = (v) => Array.isArray(v) ? [] : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, blank(x)])) : '';
+    const itemTitle = (v, i) => v && typeof v === 'object' ? (v.name || v.label || v.number || `item ${i + 1}`) : `item ${i + 1}`;
+
+    let saved = '', dirty = false, previewTimer;
+    const edBody = $('edBody'), edSave = $('edSave');
+
+    function changed() {
+      dirty = JSON.stringify(C) !== saved;
+      edSave.disabled = !dirty;
+      clearTimeout(previewTimer);
+      previewTimer = setTimeout(render, 150);
+    }
+
+    function input(obj, key, path) {
+      const v = obj[key];
+      let el;
+      if (key === 'pastry') {
+        el = document.createElement('select');
+        el.innerHTML = Object.keys(PASTRIES).map((p) => `<option${p === v ? ' selected' : ''}>${p}</option>`).join('');
+      } else {
+        el = document.createElement(isLong(path, v) ? 'textarea' : 'input');
+        el.value = v;
+        if (el.tagName === 'TEXTAREA') el.rows = Math.min(8, Math.max(2, Math.ceil(String(v).length / 44)));
+      }
+      el.addEventListener('input', () => { obj[key] = el.value; changed(); });
+      return el;
+    }
+
+    function tools(arr, i, rebuild) {
+      const t = document.createElement('span');
+      t.className = 'ed-tools';
+      const btn = (txt, title, fn) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = txt; b.title = title; b.onclick = (e) => { e.preventDefault(); fn(); changed(); rebuild(); }; t.appendChild(b); };
+      if (i > 0) btn('↑', 'move up', () => arr.splice(i - 1, 0, arr.splice(i, 1)[0]));
+      if (i < arr.length - 1) btn('↓', 'move down', () => arr.splice(i + 1, 0, arr.splice(i, 1)[0]));
+      btn('×', 'remove', () => { if (confirm('Remove this item?')) arr.splice(i, 1); });
+      return t;
+    }
+
+    // builds fields for obj into container; template = shape used for new array items
+    function build(obj, container, path = '') {
+      container.innerHTML = '';
+      for (const [key, v] of Object.entries(obj)) {
+        const p = path ? `${path}.${key}` : key;
+        if (Array.isArray(v)) {
+          const g = document.createElement('div');
+          g.className = 'ed-group';
+          const fill = () => {
+            g.innerHTML = `<small>${esc(lab(key))}</small>`;
+            v.forEach((item, i) => {
+              if (item && typeof item === 'object') {
+                const box = document.createElement('div');
+                box.className = 'ed-item';
+                const d = document.createElement('details');
+                const s = document.createElement('summary');
+                s.innerHTML = `<span>${esc(itemTitle(item, i))}</span>`;
+                s.appendChild(tools(v, i, fill));
+                const inner = document.createElement('div');
+                d.append(s, inner);
+                d.addEventListener('toggle', () => { if (d.open && !inner.childElementCount) build(item, inner, p); }, { once: false });
+                box.appendChild(d);
+                g.appendChild(box);
+              } else {
+                const row = document.createElement('div');
+                row.className = 'ed-row';
+                row.append(input(v, i, p), tools(v, i, fill));
+                g.appendChild(row);
+              }
+            });
+            const add = document.createElement('button');
+            add.type = 'button'; add.className = 'ed-add'; add.textContent = `+ add ${key === 'projects' ? 'project' : 'one'}`;
+            add.onclick = () => { v.push(v.length ? blank(v[v.length - 1]) : ''); changed(); fill(); g.querySelector('.ed-item:last-of-type details')?.setAttribute('open', ''); };
+            g.appendChild(add);
+          };
+          fill();
+          container.appendChild(g);
+        } else if (v && typeof v === 'object') {
+          const g = document.createElement('div');
+          g.className = 'ed-group';
+          build(v, g, p);
+          container.appendChild(g);
+        } else {
+          const f = document.createElement('label');
+          f.className = 'ed-field';
+          f.innerHTML = `<small>${esc(lab(key))}</small>`;
+          f.appendChild(input(obj, key, p));
+          container.appendChild(f);
+        }
+      }
+    }
+
+    function openEditor() {
+      edBody.innerHTML = '';
+      for (const key of Object.keys(C)) {
+        const sec = document.createElement('details');
+        sec.className = 'ed-sec';
+        sec.innerHTML = `<summary>${esc(lab(key))}</summary>`;
+        const inner = document.createElement('div');
+        sec.appendChild(inner);
+        const wrap = { [key]: C[key] };
+        sec.addEventListener('toggle', () => { if (sec.open && !inner.childElementCount) build(Array.isArray(C[key]) ? wrap : C[key], inner, Array.isArray(C[key]) ? '' : key); });
+        edBody.appendChild(sec);
+      }
+      document.body.classList.add('editing');
+    }
+
+    function toast(msg, err) {
+      const t = $('toast');
+      t.textContent = msg; t.classList.toggle('err', !!err); t.classList.add('show');
+      clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2600);
+    }
+
+    $('editBtn').onclick = openEditor;
+    $('edCancel').onclick = () => {
+      if (dirty && !confirm('Close without saving? Your unsaved changes will be lost.')) return;
+      if (dirty) { C = JSON.parse(saved); dirty = false; edSave.disabled = true; render(); }
+      document.body.classList.remove('editing');
+    };
+    edSave.onclick = async () => {
+      edSave.disabled = true;
+      try {
+        const r = await fetch('/api/save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(C) });
+        if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+        saved = JSON.stringify(C); dirty = false;
+        toast('saved to content.json ✓');
+      } catch (err) {
+        edSave.disabled = false;
+        toast(`couldn't save (${err.message}). Is serve.py running?`, true);
+      }
+    };
+    addEventListener('beforeunload', (e) => { if (dirty) e.preventDefault(); });
+
+    // ---- boot
+    fetch('content.json', { cache: 'no-store' })
+      .then((r) => r.json())
+      .then((data) => {
+        C = data; saved = JSON.stringify(C);
+        render();
+        if (['localhost', '127.0.0.1'].includes(location.hostname)) $('editBtn').hidden = false;
+      })
+      .catch((err) => { document.body.insertAdjacentHTML('afterbegin', `<p style="padding:90px 16px;text-align:center">Couldn't load content.json (${esc(err.message)}). Open the site through a web server, e.g. <code>python3 serve.py</code>.</p>`); });
+  </script>
+</body>
+</html>

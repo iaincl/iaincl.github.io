@@ -1,0 +1,7 @@
+# local-only files
+.DS_Store
+.claude/
+content.backup.json
+content.json.tmp
+__pycache__/
+v1-cozy.html
