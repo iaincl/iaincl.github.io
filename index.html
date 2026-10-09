@@ -185,6 +185,7 @@
     .overlay.open .receipt { transform: none; }
     .receipt.light { background: var(--paper); color: var(--ink); border: 3px solid var(--ink); }
     .receipt .c { text-align: center; }
+    #menuEmail { display: block; } #menuEmail[hidden] { display: none; }
     .receipt .hl { color: var(--sky-ink); text-decoration: none; }
     .receipt.light .hl { color: var(--hi); }
     .receipt .rule { border: 0; border-top: 1.5px dashed currentColor; margin: 14px 0; opacity: .8; }
@@ -398,7 +399,7 @@
   <!-- menu receipt -->
   <div class="overlay" id="menu" role="dialog" aria-modal="true" aria-label="Menu">
     <div class="receipt">
-      <div class="c"><span id="menuName"></span><br/><a class="hl" id="menuEmail"></a></div>
+      <div class="c"><span id="menuName"></span><a class="hl" id="menuEmail"></a></div>
       <hr class="rule" />
       <div class="row"><span>Table: 1</span><span>Dine in</span></div>
       <hr class="rule dbl" />
@@ -509,8 +510,9 @@
         `<a href="${esc(l.url)}"${ext(l.url)}><span>${esc(l.label)}</span><span></span><span>${esc(l.handle)}</span></a>`).join('');
 
       $('menuName').textContent = S.name;
-      $('menuEmail').textContent = S.email;
-      $('menuEmail').href = `mailto:${S.email}`;
+      $('menuEmail').textContent = S.email || '';
+      $('menuEmail').hidden = !S.email;
+      if (S.email) $('menuEmail').href = `mailto:${S.email}`; else $('menuEmail').removeAttribute('href');
       $('menuFoot').innerHTML = `MADE IN ${esc(S.madeIn)}<br/>${esc(S.name)}. 2026<br/><br/>THANK YOU :)`;
       $('footerText').textContent = `${S.footer} · © 2026 ${S.name}`;
     }

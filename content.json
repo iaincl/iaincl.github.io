@@ -3,7 +3,7 @@
     "name": "Iain",
     "tagline": "(welcome to my thought cafe!)",
     "hours": "Open daily, 24/7",
-    "email": "you@example.com",
+    "email": "",
     "madeIn": "SEATTLE",
     "footer": "is there anything better than the smell of fresh coffee?"
   },
@@ -248,7 +248,7 @@
     {
       "name": "reading",
       "pastry": "cake",
-      "text": "Currently reading: a book you love."
+      "text": "Currently reading: Taiwan Travelogue."
     },
     {
       "name": "music",
@@ -261,9 +261,9 @@
       "text": "Film, phone, golden hour."
     },
     {
-      "name": "something",
+      "name": "run",
       "pastry": "cookie",
-      "text": "Swap these for your real interests."
+      "text": "Run club every Monday!"
     }
   ],
   "contact": {
@@ -271,19 +271,14 @@
     "text": "Got an idea, a project, or a good café recommendation? My door's always open.",
     "links": [
       {
-        "label": "EMAIL",
-        "handle": "you@example.com",
-        "url": "mailto:you@example.com"
-      },
-      {
         "label": "GITHUB",
         "handle": "@iaincl",
         "url": "https://github.com/iaincl"
       },
       {
         "label": "LINKEDIN",
-        "handle": "/in/you",
-        "url": "#"
+        "handle": "/in/iain-li",
+        "url": "https://www.linkedin.com/in/iain-li-369745218/"
       },
       {
         "label": "INSTAGRAM",
