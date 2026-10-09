@@ -11,7 +11,7 @@ python3 serve.py
 ```
 
 Open http://localhost:4321 and press **✎ edit** (top right). Changes preview live, and **save** writes them to `content.json`.
-The edit button only appears on localhost, so visitors never see it.
+The edit panel lives in `editor.js`, which is git-ignored and never published, so the live site has no editing code.
 
 ## Structure
 

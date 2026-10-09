@@ -5,3 +5,4 @@ content.backup.json
 content.json.tmp
 __pycache__/
 v1-cozy.html
+editor.js
